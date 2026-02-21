@@ -10,22 +10,24 @@ export default function SearchBar({ onSearch, isLoading }: Props) {
 
   return (
     <form
-      className="flex gap-2"
+      className="grid gap-3 sm:grid-cols-[1fr_auto]"
       onSubmit={(e) => {
         e.preventDefault();
         onSearch(value);
       }}
     >
       <input
-        className="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm outline-none focus:border-neutral-900"
+        className="h-12 w-full rounded-none border border-black/15 bg-white px-4 text-sm outline-none placeholder:text-black/40 focus:border-black"
         placeholder="Search the collection (e.g. Monet, portrait, blue)"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setValue(e.target.value)
+        }
       />
       <button
         type="submit"
         disabled={isLoading}
-        className="rounded-xl bg-neutral-900 px-4 py-3 text-sm font-medium text-white disabled:opacity-60"
+        className="h-12 rounded-none border border-black bg-black px-5 text-sm font-medium text-white disabled:opacity-60"
       >
         {isLoading ? "Searching…" : "Search"}
       </button>
