@@ -7,6 +7,17 @@ export function artworkImageUrl(imageId: string, width = 843) {
   return `https://www.artic.edu/iiif/2/${imageId}/full/${width},/0/default.jpg`;
 }
 
+export async function fetchArtworkDetail(id: number) {
+  const res = await fetch(
+    `${BASE}/artworks/${id}?fields=id,title,artist_title,image_id,thumbnail,description,date_display,medium_display,place_of_origin`
+  );
+
+  if (!res.ok) throw new Error("Failed to load artwork details");
+
+  const json = await res.json();
+  return json.data;
+}
+
 export async function searchArtworks(
   query: string,
   signal?: AbortSignal
