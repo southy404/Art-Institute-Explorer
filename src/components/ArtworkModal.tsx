@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Artwork } from "../schemas/artwork";
 import { artworkImageUrl, fetchArtworkDetail } from "../api/aic";
+import ArtworkLensZoom from "./ArtworkLensZoom";
 
 type Props = {
   artwork: Artwork | null;
@@ -48,11 +49,11 @@ export default function ArtworkModal({ artwork, onClose }: Props) {
       >
         <div className="grid h-full lg:grid-cols-[1.3fr_0.7fr]">
           {/* ---------- IMAGE AREA ---------- */}
-          <div className="flex h-full items-center justify-center overflow-hidden bg-black/[0.04] p-6">
+          <div className="relative h-full overflow-hidden bg-black/[0.04]">
             {artwork.image_id ? (
-              <img
-                src={artworkImageUrl(artwork.image_id, 1600)}
-                className="max-h-full max-w-full object-contain"
+              <ArtworkLensZoom
+                src={artworkImageUrl(artwork.image_id, 843)}
+                alt={artwork.title}
               />
             ) : (
               <div className="text-sm text-black/50">No image available</div>
