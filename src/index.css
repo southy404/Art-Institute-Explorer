@@ -20,7 +20,7 @@ body {
   letter-spacing: -0.02em;
 }
 .scrollbar-none::-webkit-scrollbar {
-  display: none;
+  display: none !important;
 }
 .scrollbar-none {
   scrollbar-width: none;
