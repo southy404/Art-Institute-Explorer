@@ -15,32 +15,6 @@ import { useInfiniteScroll } from "./hooks/useInfiniteScroll";
 
 type Tab = "search" | "gallery";
 
-/* ---------- SECTION TITLE ---------- */
-
-function SectionTitle({
-  eyebrow,
-  title,
-  hint,
-}: {
-  eyebrow?: string;
-  title: string;
-  hint?: string;
-}) {
-  return (
-    <div className="flex items-end justify-between gap-6">
-      <div>
-        {eyebrow && (
-          <p className="text-[10px] tracking-[0.28em] text-black/50">
-            {eyebrow}
-          </p>
-        )}
-        <h3 className="mt-1 text-xl font-semibold">{title}</h3>
-        {hint && <p className="mt-1 text-sm text-black/60">{hint}</p>}
-      </div>
-    </div>
-  );
-}
-
 /* ---------- SENTINELS ---------- */
 
 function SearchSentinel({
