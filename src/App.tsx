@@ -44,22 +44,6 @@ function BrowseSentinel({
   return <div ref={sentinelRef} className="h-1" />;
 }
 
-/* ---------- TOUR ---------- */
-
-useEffect(() => {
-  const handler = (e: Event) => {
-    const { id } = (e as CustomEvent).detail;
-    fetchArtworkDetail(Number(id)).then((detail) => {
-      if (detail) {
-        const parsed = ArtworkSchema.safeParse(detail);
-        if (parsed.success) setActiveArtwork(parsed.data);
-      }
-    });
-  };
-  window.addEventListener("art-tour:activate", handler);
-  return () => window.removeEventListener("art-tour:activate", handler);
-}, []);
-
 /* ---------- APP ---------- */
 
 export default function App() {
@@ -83,6 +67,22 @@ export default function App() {
 
   const abortRef = useRef<AbortController | null>(null);
   const homeAbortRef = useRef<AbortController | null>(null);
+
+  /* ---------- TOUR ---------- */
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const { id } = (e as CustomEvent).detail;
+      fetchArtworkDetail(Number(id)).then((detail) => {
+        if (detail) {
+          const parsed = ArtworkSchema.safeParse(detail);
+          if (parsed.success) setActiveArtwork(parsed.data);
+        }
+      });
+    };
+    window.addEventListener("art-tour:activate", handler);
+    return () => window.removeEventListener("art-tour:activate", handler);
+  }, []);
 
   /* ---------- CATEGORY TILE IMAGES ---------- */
 
