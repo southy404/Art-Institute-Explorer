@@ -19,3 +19,10 @@ body {
 .display {
   letter-spacing: -0.02em;
 }
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}

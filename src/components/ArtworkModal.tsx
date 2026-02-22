@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import type { Artwork } from "../schemas/artwork";
-import { artworkImageUrl, fetchArtworkDetail } from "../api/aic";
+import { artworkImageUrl } from "../api/aic";
 import ArtworkLensZoom from "./ArtworkLensZoom";
 
 type Props = {
@@ -9,10 +9,7 @@ type Props = {
 };
 
 export default function ArtworkModal({ artwork, onClose }: Props) {
-  const [detail, setDetail] = useState<any>(null);
   const open = Boolean(artwork);
-
-  /* ---------- ESC ---------- */
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -21,18 +18,6 @@ export default function ArtworkModal({ artwork, onClose }: Props) {
     if (open) window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
-
-  /* ---------- LOAD DETAIL ---------- */
-
-  useEffect(() => {
-    if (!artwork) return;
-
-    setDetail(null);
-
-    fetchArtworkDetail(artwork.id)
-      .then(setDetail)
-      .catch(() => {});
-  }, [artwork]);
 
   if (!artwork) return null;
 
@@ -48,7 +33,6 @@ export default function ArtworkModal({ artwork, onClose }: Props) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="grid h-full lg:grid-cols-[1.3fr_0.7fr]">
-          {/* ---------- IMAGE AREA ---------- */}
           <div className="relative h-full overflow-hidden bg-black/[0.04]">
             {artwork.image_id ? (
               <ArtworkLensZoom
@@ -56,11 +40,12 @@ export default function ArtworkModal({ artwork, onClose }: Props) {
                 alt={artwork.title}
               />
             ) : (
-              <div className="text-sm text-black/50">No image available</div>
+              <div className="flex h-full items-center justify-center text-sm text-black/50">
+                No image available
+              </div>
             )}
           </div>
 
-          {/* ---------- META ---------- */}
           <aside className="flex h-full flex-col overflow-y-auto border-l border-black/10 p-8">
             <p className="text-[11px] tracking-[0.22em] text-black/50">
               ARTWORK
@@ -72,37 +57,26 @@ export default function ArtworkModal({ artwork, onClose }: Props) {
 
             <p className="mt-1 text-base text-black/70">{artist}</p>
 
-            {detail ? (
-              <>
-                {/* description */}
-                {detail.description && (
-                  <div className="mt-6 border-t border-black/10 pt-6 text-sm leading-relaxed text-black/75">
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: detail.description,
-                      }}
-                    />
-                  </div>
-                )}
-
-                {/* metadata */}
-                <div className="mt-6 space-y-2 border-t border-black/10 pt-6 text-sm text-black/70">
-                  {detail.date_display && <p>{detail.date_display}</p>}
-                  {detail.medium_display && <p>{detail.medium_display}</p>}
-                  {detail.place_of_origin && <p>{detail.place_of_origin}</p>}
-                </div>
-              </>
-            ) : (
-              <p className="mt-6 text-sm text-black/40">Loading details…</p>
+            {artwork.description && (
+              <div className="mt-6 border-t border-black/10 pt-6 text-sm leading-relaxed text-black/75">
+                <div
+                  dangerouslySetInnerHTML={{ __html: artwork.description }}
+                />
+              </div>
             )}
 
-            <div className="mt-auto text-xs text-black/40">
+            <div className="mt-6 space-y-2 border-t border-black/10 pt-6 text-sm text-black/70">
+              {artwork.date_display && <p>{artwork.date_display}</p>}
+              {artwork.medium_display && <p>{artwork.medium_display}</p>}
+              {artwork.place_of_origin && <p>{artwork.place_of_origin}</p>}
+            </div>
+
+            <div className="mt-auto pt-6 text-xs text-black/40">
               Art Institute of Chicago
             </div>
           </aside>
         </div>
 
-        {/* close */}
         <button
           onClick={onClose}
           className="absolute right-4 top-4 border border-black/15 bg-white px-3 py-1 text-sm"
