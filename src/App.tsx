@@ -6,12 +6,13 @@ import ArtworkModal from "./components/ArtworkModal";
 import HeroArtwork from "./components/HeroArtwork";
 import CategoryTiles from "./components/CategoryTiles";
 import Logo from "./assets/logo.svg";
-import { searchArtworks } from "./api/aic";
+import { searchArtworks, fetchArtworkDetail } from "./api/aic";
 import type { Artwork } from "./schemas/artwork";
 import { loadGallery, loadNotes, saveGallery, saveNotes } from "./lib/storage";
 import { NoteSchema } from "./types";
 import ArtworkRow from "./components/ArtworkRow";
 import { useInfiniteScroll } from "./hooks/useInfiniteScroll";
+import { ArtworkSchema } from "./schemas/artwork";
 
 type Tab = "search" | "gallery";
 
@@ -163,6 +164,29 @@ export default function App() {
     abortRef.current?.abort();
     if (!trimmed) return;
 
+    // ID-Suche: wenn nur Zahlen eingegeben wurden
+    if (/^\d+$/.test(trimmed)) {
+      setIsLoading(true);
+      try {
+        const detail = await fetchArtworkDetail(Number(trimmed));
+        if (detail) {
+          const parsed = ArtworkSchema.safeParse(detail);
+          if (parsed.success) {
+            setResults([parsed.data]);
+            setSearchHasMore(false);
+          } else {
+            setError("Artwork not found");
+          }
+        }
+      } catch {
+        setError("Artwork not found");
+      } finally {
+        setIsLoading(false);
+      }
+      return;
+    }
+
+    // normaler Text-Search
     const controller = new AbortController();
     abortRef.current = controller;
     setIsLoading(true);
