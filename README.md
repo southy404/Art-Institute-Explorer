@@ -4,18 +4,29 @@ Art Institute Explorer is a minimalist museum-style web app built with React + T
 
 ## Features
 
-- Curated home view with horizontal “row” sections
-- Featured hero artwork (randomized from the curated pool)
-- Category tiles with real images that trigger curated searches
-- Search experience with dedicated results view
-- Artwork detail modal:
-  - Large image view
-  - Metadata and description panel
-  - Lens-style hover zoom (magnifier)
-- Personal gallery:
-  - Save/remove artworks
-  - Curator notes per artwork
-  - Persistence via `localStorage` (gallery + notes)
+**Discovery**
+
+- Curated home view with horizontal scrollable rows (Paintings, Monet, Abstract, Portraits)
+- Grab-to-scroll interaction on all artwork rows (drag with mouse)
+- "See All" per row with infinite scroll browse view
+- Featured hero artwork, randomized from the curated pool
+- Category tiles with real artwork images that trigger curated searches
+
+**Search**
+
+- Full-text search against the AIC catalog
+- Infinite scroll – loads 24 results at a time, continues until exhausted
+
+**Artwork Detail**
+
+- Large image view with lens-style hover zoom (magnifier)
+- Metadata panel: title, artist, date, medium, place of origin
+- Description panel (where available)
+
+**Personal Gallery**
+
+- Save and remove artworks
+- Curator notes per artwork (freetext)
 
 ## Tech Stack
 

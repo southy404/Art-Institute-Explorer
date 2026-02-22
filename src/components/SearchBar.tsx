@@ -17,7 +17,7 @@ export default function SearchBar({ onSearch, isLoading }: Props) {
       }}
     >
       <input
-        className="h-12 w-full rounded-none border border-black/15 bg-white px-4 text-sm outline-none placeholder:text-black/40 focus:border-black"
+        className="h-12 w-full rounded-none border border-black/15 bg-white px-14 text-sm outline-none placeholder:text-black/40 focus:border-black"
         placeholder="Search the collection (e.g. Monet, portrait, blue)"
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

@@ -7,7 +7,7 @@ type Props = {
   isSaved?: boolean;
   note?: string;
   onAdd?: () => void;
-  onOpen?: () => void;
+  onOpen?: (artwork: Artwork) => void;
   onRemove?: () => void;
   onNoteChange?: (value: string) => void;
 };
@@ -27,7 +27,7 @@ export default function ArtworkCard({
 
   return (
     <article
-      onClick={onOpen}
+      onClick={() => onOpen?.(artwork)}
       className="group cursor-pointer border border-black/10 bg-white transition hover:border-black/30 hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)]"
     >
       {/* IMAGE */}
@@ -38,6 +38,7 @@ export default function ArtworkCard({
             alt={artwork.title}
             loading="lazy"
             className="h-full w-full object-cover cursor-zoom-in"
+            draggable={false}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-xs text-black/50">

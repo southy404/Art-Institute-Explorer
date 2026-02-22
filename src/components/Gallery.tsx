@@ -6,6 +6,7 @@ type Props = {
   notes: Record<string, string>;
   onRemove: (id: number) => void;
   onNoteChange: (id: number, value: string) => void;
+  onOpen: (artwork: Artwork) => void; // ⭐ neu
 };
 
 export default function Gallery({
@@ -13,6 +14,7 @@ export default function Gallery({
   notes,
   onRemove,
   onNoteChange,
+  onOpen,
 }: Props) {
   if (items.length === 0) {
     return (
@@ -63,6 +65,7 @@ export default function Gallery({
             note={notes[String(a.id)] ?? ""}
             onRemove={() => onRemove(a.id)}
             onNoteChange={(v) => onNoteChange(a.id, v)}
+            onOpen={() => onOpen(a)} // ⭐ Modal öffnen
           />
         ))}
       </div>
