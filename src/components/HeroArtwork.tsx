@@ -4,9 +4,10 @@ import { artworkImageUrl } from "../api/aic";
 type Props = {
   artwork?: Artwork;
   onOpen?: (a: Artwork) => void;
+  onBrowseAll?: () => void;
 };
 
-export default function HeroArtwork({ artwork, onOpen }: Props) {
+export default function HeroArtwork({ artwork, onOpen, onBrowseAll }: Props) {
   if (!artwork || !artwork.image_id) return null;
 
   const artist = artwork.artist_title ?? "Unknown artist";
@@ -35,13 +36,20 @@ export default function HeroArtwork({ artwork, onOpen }: Props) {
           </h2>
 
           <p className="mt-2 text-sm text-white/80 sm:text-base">{artist}</p>
-
-          <button
-            onClick={() => onOpen?.(artwork)}
-            className="mt-5 border border-white/40 px-4 py-2 text-sm hover:border-white"
-          >
-            View artwork →
-          </button>
+          <div className="mt-5 flex gap-3">
+            <button
+              onClick={() => onOpen?.(artwork)}
+              className="mt-5 border border-white/40 px-4 py-2 text-sm hover:border-white"
+            >
+              View artwork →
+            </button>
+            <button
+              onClick={onBrowseAll}
+              className="mt-5 border border-white/40 px-4 py-2 text-sm hover:border-white"
+            >
+              Browse all →
+            </button>
+          </div>
         </div>
       </div>
     </section>

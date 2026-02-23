@@ -375,7 +375,11 @@ export default function App() {
       )}
       <main className="px-4 py-8 sm:px-8">
         {tab === "search" && showHome && !browseQuery && (
-          <HeroArtwork artwork={heroArtwork} onOpen={setActiveArtwork} />
+          <HeroArtwork
+            artwork={heroArtwork}
+            onOpen={setActiveArtwork}
+            onBrowseAll={() => setTab("browse")}
+          />
         )}
 
         {tab === "browse" ? (
