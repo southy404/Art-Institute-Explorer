@@ -6,9 +6,16 @@ import ArtworkLensZoom from "./ArtworkLensZoom";
 type Props = {
   artwork: Artwork | null;
   onClose: () => void;
+  onAdd?: (a: Artwork) => void;
+  isSaved?: boolean;
 };
 
-export default function ArtworkModal({ artwork, onClose }: Props) {
+export default function ArtworkModal({
+  artwork,
+  onClose,
+  onAdd,
+  isSaved,
+}: Props) {
   const open = Boolean(artwork);
 
   useEffect(() => {
@@ -71,12 +78,31 @@ export default function ArtworkModal({ artwork, onClose }: Props) {
               {artwork.place_of_origin && <p>{artwork.place_of_origin}</p>}
             </div>
 
-            <div className="mt-auto pt-6 text-xs text-black/40">
+            {/* ACTIONS */}
+            <div className="mt-auto pt-6 flex gap-3">
+              <button
+                onClick={() => artwork && onAdd?.(artwork)}
+                disabled={isSaved}
+                className="border border-black px-4 py-2 text-sm hover:bg-black hover:text-white disabled:opacity-40"
+              >
+                {isSaved ? "Saved" : "Add to Gallery"}
+              </button>
+            </div>
+
+            <div className="pt-4 text-xs text-black/40">
               Art Institute of Chicago
             </div>
           </aside>
         </div>
-
+        <div className="mt-4 flex gap-3">
+          <button
+            onClick={() => artwork && onAdd?.(artwork)}
+            disabled={isSaved}
+            className="border border-black px-4 py-2 text-sm hover:bg-black hover:text-white disabled:opacity-40"
+          >
+            {isSaved ? "Saved" : "Add to Gallery"}
+          </button>
+        </div>
         <button
           onClick={onClose}
           className="absolute right-4 top-4 border border-black/15 bg-white px-3 py-1 text-sm"

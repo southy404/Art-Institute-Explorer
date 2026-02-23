@@ -91,14 +91,14 @@ export default function BrowseAll({ onOpen, saved, onAdd }: Props) {
       <div className="flex items-baseline justify-between">
         <div>
           <p className="text-[10px] tracking-[0.28em] text-black/50">BROWSE</p>
-          <h3 className="mt-1 text-xl font-semibold">
+          <h2 className="text-2xl font-semibold">
             All Artworks{" "}
             {items.length > 0 && (
               <span className="font-normal text-black/40">
                 ({items.length})
               </span>
             )}
-          </h3>
+          </h2>
         </div>
         <p className="text-sm text-black/40">
           {loading
@@ -118,11 +118,11 @@ export default function BrowseAll({ onOpen, saved, onAdd }: Props) {
         {columns.map((col, ci) => (
           <div key={ci} className="flex flex-1 flex-col gap-3 sm:gap-4 min-h-0">
             {col.map((a) => (
-              <figure key={a.id} className="bg-black/[0.03]">
+              <figure key={a.id} className="">
                 <button
                   type="button"
                   onClick={() => onOpen(a)}
-                  className="group relative block w-full overflow-hidden border border-black/10 bg-black/[0.03] text-left transition hover:border-black/30"
+                  className="group relative block w-full overflow-hidden border border-black/10 text-left transition hover:border-black/30"
                 >
                   {a.image_id ? (
                     <img
@@ -131,7 +131,7 @@ export default function BrowseAll({ onOpen, saved, onAdd }: Props) {
                       loading="lazy"
                       draggable={false}
                       className="w-full h-auto object-contain"
-                      style={{ minHeight: "120px" }} // ← Platz reservieren
+                      style={{ minHeight: "120px" }}
                       onError={(e) => {
                         (e.currentTarget as HTMLImageElement).style.display =
                           "none";

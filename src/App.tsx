@@ -361,18 +361,20 @@ export default function App() {
           </nav>
         </div>
       </header>
-      <section className="border-b border-black/10 px-4 py-14 sm:px-8">
-        <h2 className="max-w-4xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-          A quiet place to collect art.
-        </h2>
+      {tab === "search" && !query && !browseQuery && (
+        <section className="border-b border-black/10 px-4 py-14 sm:px-8">
+          <h2 className="max-w-4xl text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
+            A quiet place to collect art.
+          </h2>
 
-        <p className="mt-4 max-w-xl text-base text-black/60">
-          Browse curated rows, explore categories, and save artworks into your
-          personal collection.
-        </p>
-      </section>
+          <p className="mt-4 max-w-xl text-base text-black/60">
+            Browse curated rows, explore categories, and save artworks into your
+            personal collection.
+          </p>
+        </section>
+      )}
       <main className="px-4 py-8 sm:px-8">
-        {showHome && !browseQuery && (
+        {tab === "search" && showHome && !browseQuery && (
           <HeroArtwork artwork={heroArtwork} onOpen={setActiveArtwork} />
         )}
 
@@ -439,7 +441,7 @@ export default function App() {
 
             {/* HOME VIEW */}
             {showHome && !browseQuery && (
-              <section className="space-y-12">
+              <section className="space-y-8">
                 <CategoryTiles tiles={categoryTiles} onSelect={runSearch} />
 
                 <ArtworkRow
@@ -482,6 +484,14 @@ export default function App() {
             )}
             {showSearchResults && (
               <div className="space-y-4">
+                <div>
+                  <p className="text-[10px] tracking-[0.28em] text-black/50">
+                    SEARCH
+                  </p>
+                  <h2 className="text-2xl font-semibold">
+                    Results for "{query}" ({results.length})
+                  </h2>
+                </div>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
                   {results.map((a) => (
                     <ArtworkCard
@@ -524,6 +534,8 @@ export default function App() {
       <ArtworkModal
         artwork={activeArtwork}
         onClose={() => setActiveArtwork(null)}
+        onAdd={addToGallery}
+        isSaved={activeArtwork ? savedIds.has(activeArtwork.id) : false}
       />
     </div>
   );
