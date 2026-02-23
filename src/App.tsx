@@ -13,8 +13,9 @@ import { NoteSchema } from "./types";
 import ArtworkRow from "./components/ArtworkRow";
 import { useInfiniteScroll } from "./hooks/useInfiniteScroll";
 import { ArtworkSchema } from "./schemas/artwork";
+import BrowseAll from "./components/BrowseAll";
 
-type Tab = "search" | "gallery";
+type Tab = "search" | "browse" | "gallery";
 
 /* ---------- SENTINELS ---------- */
 
@@ -336,7 +337,17 @@ export default function App() {
           </div>
           <nav className="flex gap-2">
             <SearchBar onSearch={runSearch} isLoading={isLoading} />
-
+            <button
+              type="button"
+              onClick={() => setTab("browse")}
+              className={`border px-4 py-2 text-sm ${
+                tab === "browse"
+                  ? "border-black bg-black text-white"
+                  : "border-black/15 bg-white hover:border-black"
+              }`}
+            >
+              Browse All
+            </button>
             <button
               onClick={() => setTab("gallery")}
               className={`border px-4 py-2 text-sm ${
@@ -365,7 +376,13 @@ export default function App() {
           <HeroArtwork artwork={heroArtwork} onOpen={setActiveArtwork} />
         )}
 
-        {tab === "search" ? (
+        {tab === "browse" ? (
+          <BrowseAll
+            onOpen={setActiveArtwork}
+            saved={savedIds}
+            onAdd={addToGallery}
+          />
+        ) : tab === "search" ? (
           <section className="space-y-8">
             {error && (
               <div className="border border-black/15 bg-white p-4 text-sm">

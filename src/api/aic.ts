@@ -46,3 +46,30 @@ export async function searchArtworks(
 
   return { artworks, hasMore };
 }
+
+export async function fetchAllArtworks(
+  page = 1,
+  limit = 24,
+  signal?: AbortSignal
+): Promise<{ artworks: Artwork[]; hasMore: boolean }> {
+  const url = new URL(`${BASE}/artworks`);
+  url.searchParams.set("page", String(page));
+  url.searchParams.set("limit", String(limit));
+  url.searchParams.set(
+    "fields",
+    "id,title,artist_title,image_id,date_display,medium_display,place_of_origin,description"
+  );
+
+  const res = await fetch(url.toString(), { signal });
+  if (!res.ok) throw new Error(`API error (${res.status})`);
+
+  const json = await res.json();
+  const parsed = AICSearchResponseSchema.safeParse(json);
+  if (!parsed.success) throw new Error("Invalid API data");
+
+  const artworks = parsed.data.data;
+  const total = json.pagination?.total ?? 0;
+  const hasMore = page * limit < total;
+
+  return { artworks, hasMore };
+}
