@@ -3,7 +3,7 @@ import { artworkImageUrl } from "../api/aic";
 
 type Props = {
   artwork: Artwork;
-  variant?: "search" | "gallery";
+  variant?: "search" | "gallery" | "row";
   isSaved?: boolean;
   note?: string;
   onAdd?: () => void;
